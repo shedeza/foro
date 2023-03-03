@@ -27,6 +27,18 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $nombre = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $primerApellido = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $segundoApellido = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,5 +107,53 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(string $nombre): self
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getPrimerApellido(): ?string
+    {
+        return $this->primerApellido;
+    }
+
+    public function setPrimerApellido(string $primerApellido): self
+    {
+        $this->primerApellido = $primerApellido;
+
+        return $this;
+    }
+
+    public function getSegundoApellido(): ?string
+    {
+        return $this->segundoApellido;
+    }
+
+    public function setSegundoApellido(?string $segundoApellido): self
+    {
+        $this->segundoApellido = $segundoApellido;
+
+        return $this;
     }
 }
