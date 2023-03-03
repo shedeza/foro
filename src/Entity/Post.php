@@ -25,6 +25,10 @@ class Post
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comentario::class)]
     private Collection $comentarios;
 
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Usuario $usuario = null;
+
     public function __construct()
     {
         $this->comentarios = new ArrayCollection();
@@ -85,6 +89,18 @@ class Post
                 $comentario->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
 
         return $this;
     }
