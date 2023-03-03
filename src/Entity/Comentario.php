@@ -17,6 +17,14 @@ class Comentario
     #[ORM\Column(type: Types::TEXT)]
     private ?string $texto = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Usuario $usuario = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comentarios')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Post $post = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +38,30 @@ class Comentario
     public function setTexto(string $texto): self
     {
         $this->texto = $texto;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): self
+    {
+        $this->post = $post;
 
         return $this;
     }

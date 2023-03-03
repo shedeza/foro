@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +21,14 @@ class Post
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $texto = null;
+
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comentario::class)]
+    private Collection $comentarios;
+
+    public function __construct()
+    {
+        $this->comentarios = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -45,6 +55,36 @@ class Post
     public function setTexto(string $texto): self
     {
         $this->texto = $texto;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comentario>
+     */
+    public function getComentarios(): Collection
+    {
+        return $this->comentarios;
+    }
+
+    public function addComentario(Comentario $comentario): self
+    {
+        if (!$this->comentarios->contains($comentario)) {
+            $this->comentarios->add($comentario);
+            $comentario->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComentario(Comentario $comentario): self
+    {
+        if ($this->comentarios->removeElement($comentario)) {
+            // set the owning side to null (unless already changed)
+            if ($comentario->getPost() === $this) {
+                $comentario->setPost(null);
+            }
+        }
 
         return $this;
     }
