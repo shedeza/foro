@@ -5,11 +5,16 @@ namespace App\Entity;
 use App\Repository\UsuarioRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
+#[UniqueEntity('username')]
 class Usuario extends Base implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,7 +25,7 @@ class Usuario extends Base implements UserInterface, PasswordAuthenticatedUserIn
     #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::JSON)]
     private array $roles = [];
 
     /**
@@ -30,12 +35,17 @@ class Usuario extends Base implements UserInterface, PasswordAuthenticatedUserIn
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     private ?string $email = null;
 
     #[ORM\Column(length: 100)]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
     private ?string $primerApellido = null;
 
     #[ORM\Column(length: 50, nullable: true)]
