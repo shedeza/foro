@@ -59,6 +59,11 @@ class Usuario extends Base implements UserInterface, PasswordAuthenticatedUserIn
         $this->posts = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return "$this->nombre $this->primerApellido $this->segundoApellido";
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="container" class="container">
+        <header id="header" class="header">
+            {% block header %}
+                {# % include "_menu.html.twig" % #} <br />
+            {% endblock %}
+        </header>
+
+        <main id="main" class="main"> 
+            {% block content %}{% endblock %} 
+        </main> 
+        
+        <footer id="footer" class="footer"> 
+            {% block footer %} {% endblock %} 
+        </footer> 
+    </div>
+{% endblock %} 

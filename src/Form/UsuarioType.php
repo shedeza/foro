@@ -15,7 +15,7 @@ class UsuarioType extends AbstractType
             //->add('createdAt')
             //->add('updatedAt')
             ->add('username')
-            //->add('roles')
+            // ->add('roles')
             ->add('password')
             ->add('email')
             ->add('nombre')

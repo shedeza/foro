@@ -1,29 +1,23 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Post index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Post index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>Id</th>
                 <th>Titulo</th>
-                <th>Texto</th>
+                <th>CreatedAt</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for post in posts %}
             <tr>
-                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ post.updatedAt ? post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ post.id }}</td>
                 <td>{{ post.titulo }}</td>
-                <td>{{ post.texto }}</td>
+                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_post_show', {'id': post.id}) }}">show</a>
                     <a href="{{ path('app_post_edit', {'id': post.id}) }}">edit</a>
