@@ -1,0 +1,30 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Hello AppController!{% endblock %}
+
+{% block content %}
+
+<div class="example-wrapper">
+    <h1>Hello </h1>
+
+    <h3>{{ nombre | upper }}</h3>
+    <p>{{ colores | length }}</p>
+    <ol>
+        {% for color in colores %}
+            <li>{{ color }}</li>
+        {% endfor %}
+    </ol>
+
+    {% if 'rojo' in colores %}
+        Si
+    {% else %}
+        No
+    {% endif %}
+    <br />    
+    {{ colores | join(', ') }}
+
+    <br />
+
+    {{ persona.nombre }} {{ persona.paterno }}
+</div>
+{% endblock %}

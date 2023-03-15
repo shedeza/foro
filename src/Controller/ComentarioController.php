@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comentario;
+use App\Entity\Post;
 use App\Form\ComentarioType;
 use App\Repository\ComentarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,20 +22,23 @@ class ComentarioController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_comentario_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ComentarioRepository $comentarioRepository): Response
+    #[Route('/new/{id}', name: 'app_comentario_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, ComentarioRepository $comentarioRepository, Post $post): Response
     {
         $comentario = new Comentario();
+        $comentario->setPost($post);
+
         $form = $this->createForm(ComentarioType::class, $comentario);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comentarioRepository->save($comentario, true);
 
-            return $this->redirectToRoute('app_comentario_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_post_show', ['id' => $post->getId()], Response::HTTP_SEE_OTHER);
         }
+        
 
-        return $this->renderForm('comentario/new.html.twig', [
+        return $this->render('comentario/_form.html.twig', [
             'comentario' => $comentario,
             'form' => $form,
         ]);

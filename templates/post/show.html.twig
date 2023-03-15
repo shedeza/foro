@@ -1,34 +1,33 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Post{% endblock %}
 
-{% block body %}
-    <h1>Post</h1>
+{% block content %}
+    <h1>{{ post.titulo }}</h1>
+    <hr />
+    <div class="row">
+        <div class="col">{{ post.usuario.username }}</div>
+        <div class="col"><span class="float-end">{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</span></div>
+    </div>
+    <hr />
+    <p>{{ post.texto | nl2br }}</p>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ post.updatedAt ? post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ post.id }}</td>
-            </tr>
-            <tr>
-                <th>Titulo</th>
-                <td>{{ post.titulo }}</td>
-            </tr>
-            <tr>
-                <th>Texto</th>
-                <td>{{ post.texto }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="border-start border-success p-3">
+        {% for comentario in post.comentarios %}            
+            <div>
+                <hr />
+                <div class="row">    
+                    <div class="col"><strong>{{ comentario.usuario }}</strong></div>
+                    <div class="col"></div>
+                    <div class="col "><span class="float-end">{{ comentario.createdAt | date('d/m/Y H:i') }}</span></div>
+                </div>
+                <hr />
+                <p class="pt-1">{{ comentario.texto | nl2br }}</p>
+            </div>            
+        {% endfor %}
+    </div>
+
+    {{ render(path('app_comentario_new', {'id': post.id})) }}
 
     <a href="{{ path('app_post_index') }}">back to list</a>
 

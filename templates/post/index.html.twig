@@ -5,23 +5,27 @@
 {% block content %}
     <h1>Post index</h1>
 
-    <table class="table">
+    {{ include('post/_form.html.twig') }}
+
+    <table class="table table-hover">
         <thead>
             <tr>
+                <th>Autor</th>
                 <th>Titulo</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
+                <th>Respuestas</th>
+                <th>Fecha Publicación</th>
             </tr>
         </thead>
         <tbody>
         {% for post in posts %}
-            <tr>
+            <tr 
+                style="cursor: pointer;" 
+                onClick="window.location='{{ path('app_post_show', {'id': post.id}) }}';"
+            >
+                <td>{{ post.usuario.username }}</td>
                 <td>{{ post.titulo }}</td>
+                <td>{{ post.comentarios | length }}</td>
                 <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_post_show', {'id': post.id}) }}">show</a>
-                    <a href="{{ path('app_post_edit', {'id': post.id}) }}">edit</a>
-                </td>
             </tr>
         {% else %}
             <tr>
@@ -30,6 +34,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_post_new') }}">Create new</a>
 {% endblock %}

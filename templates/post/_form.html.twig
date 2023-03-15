@@ -1,4 +1,27 @@
 {{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    <div class="row align-items-center">
+        <div class="col-auto">
+            {{ form_label(form.titulo, 'Titulo', {'label_attr': {'class': 'col-form-label'}}) }}
+        </div>
+        <div class="col">
+            {{ form_widget(form.titulo, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.titulo) }}
+        </div>
+    </div>
+
+    {{ form_label(form.texto, null, {'label_attr': {'class': 'col-form-label'}}) }}
+    <div class="row align-items-center">
+        <div class="col">
+            {{ form_widget(form.texto, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.texto) }}
+        </div>
+    </div>
+
+
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    <button class="btn btn-outline-success float-end mt-3 mb-3">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
