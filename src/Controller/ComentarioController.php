@@ -41,6 +41,7 @@ class ComentarioController extends AbstractController
         return $this->render('comentario/_form.html.twig', [
             'comentario' => $comentario,
             'form' => $form,
+            'post' => $post
         ]);
     }
 

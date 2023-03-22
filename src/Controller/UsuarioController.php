@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Usuario;
 use App\Form\UsuarioType;
 use App\Repository\UsuarioRepository;
+use App\Service\UsuarioFormProcessor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,15 +24,13 @@ class UsuarioController extends AbstractController
     }
 
     #[Route('/new', name: 'app_usuario_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UsuarioRepository $usuarioRepository): Response
+    public function new(Request $request, UsuarioFormProcessor $usuarioFormProcessor): Response
     {
         $usuario = new Usuario();
-        $form = $this->createForm(UsuarioType::class, $usuario);
-        $form->handleRequest($request);
+       
+        [$usuario, $form] = $usuarioFormProcessor($request, $usuario);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $usuarioRepository->save($usuario, true);
-
+        if ($usuario) {
             return $this->redirectToRoute('app_usuario_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -50,14 +49,11 @@ class UsuarioController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_usuario_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Usuario $usuario, UsuarioRepository $usuarioRepository): Response
+    public function edit(UsuarioFormProcessor $usuarioFormProcessor, Request $request, Usuario $usuario): Response
     {
-        $form = $this->createForm(UsuarioType::class, $usuario);
-        $form->handleRequest($request);
+        [$usuario, $form] = $usuarioFormProcessor($request, $usuario);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $usuarioRepository->save($usuario, true);
-
+        if ($usuario) {
             return $this->redirectToRoute('app_usuario_index', [], Response::HTTP_SEE_OTHER);
         }
 

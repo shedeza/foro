@@ -23,7 +23,9 @@ class UsuarioType extends AbstractType
                 ],
                 'multiple' => true
             ])
-            ->add('password')
+            ->add('password', null, [
+                'required' => false,
+            ])
             ->add('email')
             ->add('nombre')
             ->add('primerApellido')

@@ -1,4 +1,14 @@
-{{ form_start(form) }}
+{{ form_start(form, {'action': path('app_comentario_new', {'id': post.id})}) }}
+
+    {{ form_label(form.texto, 'Dejar un comentario', {'label_attr': {'class': 'col-form-label'}}) }}
+    <div class="row align-items-center">
+        <div class="col">
+            {{ form_widget(form.texto, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.texto) }}
+        </div>
+    </div>
+
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-outline-success mt-3 float-end">{{ button_label|default('Save') }}</button>
+    <div class="clearfix"></div>
 {{ form_end(form) }}
