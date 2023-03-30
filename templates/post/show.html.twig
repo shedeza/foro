@@ -27,11 +27,12 @@
         {% endfor %}
     </div>
 
-    {{ render(path('app_comentario_new', {'id': post.id})) }}
-
     <a href="{{ path('app_post_index') }}">back to list</a>
-
-    <a href="{{ path('app_post_edit', {'id': post.id}) }}">edit</a>
-
-    {{ include('post/_delete_form.html.twig') }}
+    
+    {% if app.user %}
+        {{ render(path('app_comentario_new', {'id': post.id})) }}
+        <a href="{{ path('app_post_edit', {'id': post.id}) }}">edit</a>
+        {{ include('post/_delete_form.html.twig') }}
+    {% endif %}
+    
 {% endblock %}

@@ -23,7 +23,7 @@ class UsuarioFormProcessor
     {
         $this->formFactory = $formFactory;
         $this->usuarioRepository = $usuarioRepository;
-        $this->passwordHasher = $passwordHasher;
+        $this->passwordHasher = $passwordHasher; 
     }
 
     public function __invoke(Request $request, Usuario $usuario)

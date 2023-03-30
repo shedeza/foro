@@ -5,7 +5,9 @@
 {% block content %}
     <h1>Post index</h1>
 
-    {{ include('post/_form.html.twig') }}
+    {% if app.user %}
+        {{ include('post/_form.html.twig') }}
+    {% endif %}
 
     <table class="table table-hover">
         <thead>

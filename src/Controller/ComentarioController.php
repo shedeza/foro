@@ -27,6 +27,7 @@ class ComentarioController extends AbstractController
     {
         $comentario = new Comentario();
         $comentario->setPost($post);
+        $comentario->setUsuario($this->getUser());
 
         $form = $this->createForm(ComentarioType::class, $comentario);
         $form->handleRequest($request);

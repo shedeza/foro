@@ -8,16 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-#[Route('app/')]
+#[Route('/app')]
 class AppController extends AbstractController
 {
-    #[Route('contacto/')]
+    #[Route('/contacto')]
     public function contacto()
     {
         return $this->render('app/contacto.html.twig');
     }
 
-    #[Route('login', name: 'app_login')]
+    #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -29,14 +29,14 @@ class AppController extends AbstractController
         ]);
     }
 
-    #[Route('logout', name: 'app_logout', methods: ['GET'])]
+    #[Route('/logout', name: 'app_logout', methods: ['GET'])]
     public function logout()
     {
         // controller can be blank: it will never be called!
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
     
-    #[Route('{nombre}', name: 'app_app')]
+    #[Route('/{nombre}', name: 'app_app')]
     public function index(Request $request, string $nombre): Response
     {   
         return $this->render('app/index.html.twig', [

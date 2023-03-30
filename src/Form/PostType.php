@@ -14,7 +14,6 @@ class PostType extends AbstractType
         $builder
             ->add('titulo')
             ->add('texto')
-            ->add('usuario')
         ;
     }
 

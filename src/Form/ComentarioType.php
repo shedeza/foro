@@ -13,7 +13,6 @@ class ComentarioType extends AbstractType
     {
         $builder
             ->add('texto')
-            ->add('usuario')
         ;
     }
 

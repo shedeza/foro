@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,8 @@ class PostController extends AbstractController
     public function index(Request $request, PostRepository $postRepository): Response
     {
         $post = new Post();
+
+        $post->setUsuario($this->getUser());
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
@@ -32,7 +35,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<\d+>}', name: 'app_post_show', methods: ['GET'])]
+    #[Route('/{id<\d+>}/show', name: 'app_post_show', methods: ['GET'])]
     public function show(Post $post): Response
     {
         return $this->render('post/show.html.twig', [
@@ -60,6 +63,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_post_edit', methods: ['GET', 'POST'])]
+    #[Security("post.getUsuario().getId() == user.getId() or is_granted('ROLE_ADMIN')")]
     public function edit(Request $request, Post $post, PostRepository $postRepository): Response
     {
         $form = $this->createForm(PostType::class, $post);
@@ -78,6 +82,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_post_delete', methods: ['POST'])]
+    #[Security("post.getUsuario().getId() == user.getId() or is_granted('ROLE_ADMIN')")]
     public function delete(Request $request, Post $post, PostRepository $postRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
