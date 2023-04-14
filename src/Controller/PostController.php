@@ -30,7 +30,7 @@ class PostController extends AbstractController
         }
 
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
+            'posts' => $postRepository->getAll(), 
             'form' => $form
         ]);
     }
@@ -81,7 +81,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_post_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_post_delete', methods: ['POST'])]
     #[Security("post.getUsuario().getId() == user.getId() or is_granted('ROLE_ADMIN')")]
     public function delete(Request $request, Post $post, PostRepository $postRepository): Response
     {

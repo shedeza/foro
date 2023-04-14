@@ -8,7 +8,7 @@
     {% if app.user %}
         {{ include('post/_form.html.twig') }}
     {% endif %}
-
+    
     <table class="table table-hover">
         <thead>
             <tr>
@@ -24,9 +24,9 @@
                 style="cursor: pointer;" 
                 onClick="window.location='{{ path('app_post_show', {'id': post.id}) }}';"
             >
-                <td>{{ post.usuario.username }}</td>
+                <td>{{ post.username }}</td>
                 <td>{{ post.titulo }}</td>
-                <td>{{ post.comentarios | length }}</td>
+                <td>{{ post.comentarios }}</td>
                 <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         {% else %}
@@ -36,4 +36,4 @@
         {% endfor %}
         </tbody>
     </table>
-{% endblock %}
+{% endblock %} 

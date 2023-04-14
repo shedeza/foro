@@ -58,7 +58,7 @@ class UsuarioController extends AbstractController
         [$usuario, $form] = $usuarioFormProcessor($request, $usuario);
 
         if ($usuario) {
-            return $this->redirectToRoute('app_usuario_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_usuario_show', ['id' => $usuario->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('usuario/edit.html.twig', [

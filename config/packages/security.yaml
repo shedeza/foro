@@ -31,6 +31,10 @@ security:
 
             logout:
                 path: app_logout 
+    
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER, ROLE_POST_DELETE]
+        ROLE_USER: [ROLE_POST_DELETE]
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
@@ -40,7 +44,8 @@ security:
         - { path: '^/$', role: PUBLIC_ACCESS }
         - { path: '^/[0-9]+/show', role: PUBLIC_ACCESS }
         - { path: '^/app/login', role: PUBLIC_ACCESS }
-        - { path: '^/', role: ROLE_USER }
+        - { path: '^/post/[0-9]+/delete', role: ROLE_POST_DELETE }
+        - { path: '^/', role: [ROLE_USER, ROLE_ADMIN] }
 
 when@test:
     security:

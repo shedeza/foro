@@ -39,6 +39,24 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
+    public function getAll()
+    {
+        // $username = '1';
+        $query = "
+            SELECT p.id AS id, p.titulo AS titulo, p.createdAt AS createdAt, u.username AS username, COUNT(c.id) AS comentarios
+                FROM App\Entity\Post p 
+                    JOIN p.usuario u
+                    LEFT JOIN p.comentarios c
+                GROUP BY p
+                ORDER BY p.createdAt DESC
+        ";
+
+        $consulta = $this->getEntityManager()->createQuery($query);
+        // $consulta->setParameter('username', "%$username%");
+
+        return $consulta->getResult();
+    }
+
 //    /**
 //     * @return Post[] Returns an array of Post objects
 //     */

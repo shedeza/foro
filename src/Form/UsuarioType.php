@@ -5,6 +5,9 @@ namespace App\Form;
 use App\Entity\Usuario;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,10 +26,14 @@ class UsuarioType extends AbstractType
                 ],
                 'multiple' => true
             ])
-            ->add('password', null, [
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Las contraseñas deben coincidir',
                 'required' => false,
+                'first_options'  => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
             ])
-            ->add('email')
+            ->add('email', EmailType::class)
             ->add('nombre')
             ->add('primerApellido')
             ->add('segundoApellido')
